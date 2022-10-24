@@ -1,0 +1,1 @@
+export const tableElement = document.querySelector("#play-field");
