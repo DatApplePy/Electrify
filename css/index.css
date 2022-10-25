@@ -11,6 +11,12 @@
         #DC9779ff,
         #FAAE7Bff
     );
+    --cell-size: 50px;
+    --svg-size: calc(var(--cell-size) - 10px);
+}
+
+html {
+    height: 100vh;
 }
 
 body {
@@ -19,7 +25,6 @@ body {
     background-image: var(--gradient);
     background-size: 400%;
     animation: bg-animation 5s infinite alternate;
-    min-height: 100vh;
 }
 
 @keyframes bg-animation {
@@ -37,6 +42,10 @@ h1 {
     color: white;
 }
 
+#name {
+    margin: 16px;
+}
+
 #main {
     display: flex;
     margin: 16px 8px;
@@ -44,7 +53,6 @@ h1 {
 
 #buttons {
     flex: 2;
-    padding: 8px;
 }
 
 #buttons button {
@@ -72,21 +80,29 @@ h1 {
 }
 
 #details {
+    max-height: 0;
     background-color: white;
     border-radius: 16px;
-    padding: 16px;
+    margin: 16px;
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out;
+}
+
+#details p, ul, h2 {
     margin: 16px;
 }
 
-#details p, ul {
-    margin: 0;
-}
-
 #game {
-    display: flex;
+    display: none;
     height: 100vh;
     justify-content: center;
     align-items: center;
+}
+
+#game div {
+    padding: 8px;
+    background-color: white;
+    border-radius: 8px;
 }
 
 #play-field {
@@ -97,16 +113,19 @@ h1 {
 #play-field td {
     border: 2px solid black;
     margin: 0;
-    width: 30px;
-    height: 30px;
+    width: var(--cell-size);
+    height: var(--cell-size);
     text-align: center;
     color: white;
+    font-size: 32px;
 }
 
-
-
-
-
+#play-field img {
+    width: var(--svg-size);
+    height: var(--svg-size);
+    display: block;
+    margin: auto;
+}
 
 @media screen and (max-width: 1080px) {
     #buttons button {
@@ -117,5 +136,11 @@ h1 {
         flex-direction: column;
         align-items: center;
         flex: 1;
+    }
+
+    .flex-col-center-sm {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 }

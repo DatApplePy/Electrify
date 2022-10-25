@@ -6,16 +6,21 @@
     <title>Felvillanyozódás</title>
 </head>
 <body>
-<div id="menu" hidden> <!-- hidden-t kiszedni!!! -->
+<div id="menu"> <!-- hidden-t kiszedni!!! -->
     <h1>Felvillanyozódás</h1>
+    <div id="name">
+        <label for="player-name">Írd be a neved:</label>
+        <input type="text" name="" id="player-name">
+    </div>
     <div id="main">
+
         <div id="buttons">
-            <div>
+            <div class="flex-col-center-sm">
                 <button id="easy">Könnyű</button>
                 <button id="normal">Közepes</button>
                 <button id="hard">Nehéz</button>
             </div>
-            <div>
+            <div class="flex-col-center-sm">
                 <button id="saved-game">Folytatás</button>
                 <button id="details-button">Részletek</button>
             </div>
@@ -55,6 +60,6 @@
         <table id="play-field"></table>
     </div>
 </div>
-<script src="../js/event.js" type="module"></script>
+<script src="../js/index.js" type="module"></script>
 </body>
 </html>
