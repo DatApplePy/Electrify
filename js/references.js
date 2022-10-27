@@ -13,3 +13,4 @@ export const loadHardButton = document.querySelector("#hard");
 export const loadSavedGameButton = document.querySelector("#saved-game");
 export const detailsButton = document.querySelector("#details-button");
 export const detailsDiv = document.querySelector("#details");
+export const playerNameInput = document.querySelector("#player-name");

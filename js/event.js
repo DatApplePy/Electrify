@@ -1,24 +1,11 @@
-import {detailsDiv, gameDiv, menuDiv} from "./references.js";
-import {easyBoardState} from "../resource/easylevel.js";
-import {normalBoardState} from "../resource/normallevel.js";
-import {hardBoardState} from "../resource/hardlevel.js";
+import {detailsDiv, gameDiv, menuDiv, playerNameInput} from "./references.js";
 import {state} from "./state.js";
 import {render} from "./renderer.js";
 
-export function loadEasyLevel() {
-    state.loadLevel(easyBoardState);
-    switchPanel();
-    render(state.board);
-}
-
-export function loadNormalLevel() {
-    state.loadLevel(normalBoardState);
-    switchPanel();
-    render(state.board);
-}
-
-export function loadHardLevel() {
-    state.loadLevel(hardBoardState);
+export function loadLevel(event) {
+    const name = playerNameInput.value;
+    const level = event.target.level;
+    state.loadLevel(name, level);
     switchPanel();
     render(state.board);
 }
@@ -37,16 +24,16 @@ export function showDetails() {
 }
 
 export function onCellClick(event) {
-    if(!event.target.matches("td")) {
-        return;
-    }
+    const targetElement = event.target.closest("td");
+    if(!this.contains(targetElement)) return;
 
-    const cell = event.target;
+    const cell = targetElement;
     const x = cell.cellIndex;
     const y = cell.parentNode.rowIndex;
 
     if(!state.isObstacle(x, y)) {
         state.putBulb(x, y);
-        render(state.board);
+        state.checkAllSides(x, y, 1);
+        // render(state.board);
     }
 }
