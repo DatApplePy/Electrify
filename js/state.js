@@ -1,6 +1,6 @@
-import {black, bulb, red, white, yellow} from "./references.js";
-import {cellMap} from "../resource/cellMap.js";
-import {render} from "./renderer.js";
+import { bulb, black, red, white, yellow } from "./references.js";
+import { cellMap } from "../resource/cellMap.js";
+import { render } from "./renderer.js";
 
 export const state = {
     name: null,
@@ -17,49 +17,66 @@ export const state = {
         }
     },
 
-    isObstacle(x, y) {
-        return this.board[y][x].color === black;
-    },
-
-    isOutOfBound(x, y) {
-        console.log(x, y);
-        return y < 0 || y >= this.board.length || x < 0 || x >= this.board[y].length;
-    },
-
-    isBulb(x, y) {
-        return this.board[y][x].value === bulb;
-    },
-
     putBulb(x, y) {
-        console.log(x, y);
         if (this.board[y][x].value === "") {
             this.board[y][x].value = bulb;
-            this.board[y][x].color = yellow;
+            this.board[y][x].lightSourceCount++;
         } else {
             this.board[y][x].value = "";
-            this.board[y][x].color = white;
+            this.board[y][x].lightSourceCount--;
+        }
+        this.paintCell(x, y)
+    },
+
+    spreadLight(x, y, offset, directions = [true, true, true, true]) {
+        if (directions[0]) directions[0] = this.checkSide(x, y, x, y - offset);
+        if (directions[1]) directions[1] = this.checkSide(x, y, x, y + offset);
+        if (directions[2]) directions[2] = this.checkSide(x, y, x - offset, y);
+        if (directions[3]) directions[3] = this.checkSide(x, y, x + offset, y);
+
+        if (directions.includes(true)) {
+            this.spreadLight(x, y, ++offset, directions);
         }
     },
 
-    checkSide(x, y) {
+    checkSide(centerX, centerY, x, y) {
         if (!this.isOutOfBound(x, y) && !this.isObstacle(x, y)) {
-            this.board[y][x].color = yellow;
+            if (this.isBulb(centerX, centerY)) {
+                this.board[y][x].lightSourceCount++;
+                if (this.isBulb(x, y)) {
+                    this.paintCell(x, y, red);
+                    this.paintCell(centerX, centerY, red);
+                } else {
+                    this.paintCell(x, y);
+                    this.paintCell(centerX, centerY);
+                }
+            } else {
+                this.board[y][x].lightSourceCount--;
+                this.paintCell(x, y);
+            }
             return true;
         } else {
             return false;
         }
     },
 
-    checkAllSides(x, y, offset, directions = [true, true, true, true]) {
-        if (directions[0]) directions[0] = this.checkSide(x, y - offset);
-        if (directions[1]) directions[1] = this.checkSide(x, y + offset);
-        if (directions[2]) directions[2] = this.checkSide(x - offset, y);
-        if (directions[3]) directions[3] = this.checkSide(x + offset, y);
-
-        render(this.board);
-
-        if (directions.includes(true)) {
-            this.checkAllSides(x, y, ++offset, directions);
+    paintCell(x, y, customColor = yellow) {
+        if (this.board[y][x].lightSourceCount === 0) {
+            this.board[y][x].color = white;
+        } else {
+            this.board[y][x].color = customColor;
         }
+    },
+
+    isObstacle(x, y) {
+        return this.board[y][x].color === black;
+    },
+
+    isOutOfBound(x, y) {
+        return y < 0 || y >= this.board.length || x < 0 || x >= this.board[y].length;
+    },
+
+    isBulb(x, y) {
+        return this.board[y][x].value === bulb;
     }
 };

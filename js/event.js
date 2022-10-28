@@ -33,7 +33,7 @@ export function onCellClick(event) {
 
     if(!state.isObstacle(x, y)) {
         state.putBulb(x, y);
-        state.checkAllSides(x, y, 1);
-        // render(state.board);
+        state.spreadLight(x, y, 1);
+        render(state.board);
     }
 }
