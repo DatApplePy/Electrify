@@ -9,5 +9,5 @@ function renderRow(row) {
 }
 
 function renderCell(cell) {
-    return `<td style="background-color: ${cell.color}">${cell.value}</td>`
+    return `<td ${cell.style}>${cell.value}</td>`
 }

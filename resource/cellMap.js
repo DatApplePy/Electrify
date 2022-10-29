@@ -16,8 +16,8 @@ export const cellMap = {
     },
 
     compress(cell) {
-        if (cell.color === white) return "wh";
-        if (cell.color === yellow) return "yl";
-        if (cell.color === black) return cell.value === "" ? "bl" : "b" + cell.value;
+        if (cell.style === white) return "wh";
+        if (cell.style === yellow) return "yl";
+        if (cell.style === black) return cell.value === "" ? "bl" : "b" + cell.value;
     }
 }

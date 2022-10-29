@@ -1,6 +1,6 @@
-import { bulb, black, red, white, yellow } from "./references.js";
-import { cellMap } from "../resource/cellMap.js";
-import { render } from "./renderer.js";
+import {bulb, black, red, white, yellow} from "./references.js";
+import {cellMap} from "../resource/cellMap.js";
+import {render} from "./renderer.js";
 
 export const state = {
     name: null,
@@ -28,31 +28,30 @@ export const state = {
         this.paintCell(x, y)
     },
 
-    spreadLight(x, y, offset, directions = [true, true, true, true]) {
+    async spreadLight(x, y, offset, directions = [true, true, true, true]) {
         if (directions[0]) directions[0] = this.checkSide(x, y, x, y - offset);
         if (directions[1]) directions[1] = this.checkSide(x, y, x, y + offset);
         if (directions[2]) directions[2] = this.checkSide(x, y, x - offset, y);
         if (directions[3]) directions[3] = this.checkSide(x, y, x + offset, y);
 
+        render(this.board);
+        await this.sleep(1000);
+
         if (directions.includes(true)) {
-            this.spreadLight(x, y, ++offset, directions);
+            await this.spreadLight(x, y, ++offset, directions);
         }
     },
 
     checkSide(centerX, centerY, x, y) {
         if (!this.isOutOfBound(x, y) && !this.isObstacle(x, y)) {
-            if (this.isBulb(centerX, centerY)) {
-                this.board[y][x].lightSourceCount++;
-                if (this.isBulb(x, y)) {
-                    this.paintCell(x, y, red);
-                    this.paintCell(centerX, centerY, red);
+            if (this.isBulb(x, y)) {
+                if (this.isBulb(centerX, centerY)) {
+                    this.board[y][x].overlappingBulbs++;
+                    this.board[centerY][centerX].overlappingBulbs++;
                 } else {
-                    this.paintCell(x, y);
-                    this.paintCell(centerX, centerY);
+                    this.board[y][x].overlappingBulbs--;
+                    this.board[centerY][centerX].overlappingBulbs--;
                 }
-            } else {
-                this.board[y][x].lightSourceCount--;
-                this.paintCell(x, y);
             }
             return true;
         } else {
@@ -60,16 +59,20 @@ export const state = {
         }
     },
 
-    paintCell(x, y, customColor = yellow) {
-        if (this.board[y][x].lightSourceCount === 0) {
-            this.board[y][x].color = white;
+    paintCell(x, y) {
+        if (this.board[y][x].overlappingBulbs === 0) {
+            if (this.board[y][x].lightSourceCount === 0) {
+                this.board[y][x].style = white;
+            } else {
+                this.board[y][x].style = yellow;
+            }
         } else {
-            this.board[y][x].color = customColor;
+            this.board[y][x].style = red;
         }
     },
 
     isObstacle(x, y) {
-        return this.board[y][x].color === black;
+        return this.board[y][x].style === black;
     },
 
     isOutOfBound(x, y) {
@@ -78,5 +81,9 @@ export const state = {
 
     isBulb(x, y) {
         return this.board[y][x].value === bulb;
+    },
+
+    sleep(time) {
+        return new Promise(resolve => setTimeout(resolve, time));
     }
 };
