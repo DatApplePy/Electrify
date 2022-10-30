@@ -12,11 +12,11 @@ A fegyelmi vétség legsúlyosabb következménye a hallgató elbocsátása az e
 
 Minimálisan teljesítendő (enélkül nem fogadjuk el, 8 pont)
 
-[ ] Egyéb: a "További elvárások" részben szereplő `README.md` fájl megfelelően kitöltve szerepel a feltöltött csomagban (0 pont)
-[ ] Játéktér: egy pálya elemei helyesen megjelennek (1 pont)
-[ ] Játéktér: a fehér cellákra kattintással villanykörte helyezhető el (1 pont)
-[ ] Játéktér: a korábban elhelyezett villanykörte kattintással el is távolítható (1 pont)
-[ ] Játéktér: a fekete cellákra nem lehet villanykörtét elhelyezni (1 pont)
+[X] Egyéb: a "További elvárások" részben szereplő `README.md` fájl megfelelően kitöltve szerepel a feltöltött csomagban (0 pont)
+[X] Játéktér: egy pálya elemei helyesen megjelennek (1 pont)
+[X] Játéktér: a fehér cellákra kattintással villanykörte helyezhető el (1 pont)
+[X] Játéktér: a korábban elhelyezett villanykörte kattintással el is távolítható (1 pont)
+[X] Játéktér: a fekete cellákra nem lehet villanykörtét elhelyezni (1 pont)
 [ ] Játéktér: a játék detektálja (automatikusan vagy gombra kattintva), ha az elkészített megoldás helyes (3 pont)
 [ ] Játéktér: helyes megoldás után a játék újrakezdhető az oldal újratöltése nélkül (1 pont)
 

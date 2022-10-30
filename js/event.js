@@ -1,13 +1,15 @@
 import {detailsDiv, gameDiv, menuDiv, playerNameInput} from "./references.js";
-import {state} from "./state.js";
 import {render} from "./renderer.js";
+import {State} from "./state.js";
+
+const state = new State();
 
 export function loadLevel(event) {
     const name = playerNameInput.value;
     const level = event.target.level;
     state.loadLevel(name, level);
     switchPanel();
-    render(state.board);
+    render(state.getBoard());
 }
 
 function switchPanel() {
@@ -16,23 +18,22 @@ function switchPanel() {
 }
 
 export function showDetails() {
-    if(detailsDiv.style.maxHeight) {
+    if (detailsDiv.style.maxHeight) {
         detailsDiv.style.maxHeight = null;
     } else {
         detailsDiv.style.maxHeight = detailsDiv.scrollHeight + "px";
     }
 }
 
-export function onCellClick(event) {
+export async function onCellClick(event) {
     const targetElement = event.target.closest("td");
-    if(!this.contains(targetElement)) return;
+    if (!this.contains(targetElement)) return;
 
-    const cell = targetElement;
-    const x = cell.cellIndex;
-    const y = cell.parentNode.rowIndex;
+    if (!state.isUpdating()) {
+        const cell = targetElement;
+        const x = cell.cellIndex;
+        const y = cell.parentNode.rowIndex;
 
-    if(!state.isObstacle(x, y)) {
-        state.putBulb(x, y);
-        state.spreadLight(x, y, 1);
+        console.log(await state.update(x, y));
     }
 }
