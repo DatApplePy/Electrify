@@ -44,7 +44,13 @@ h1 {
 }
 
 #name {
-    margin: 16px;
+    margin: 8px;
+    display: flex;
+    justify-content: center;
+}
+
+#name label, input {
+    margin: 8px;
 }
 
 #main {

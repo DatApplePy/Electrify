@@ -1,15 +1,37 @@
-import {detailsDiv, gameDiv, menuDiv, playerNameInput} from "./references.js";
-import {render} from "./renderer.js";
-import {State} from "./state.js";
+import { detailsDiv, gameDiv, loadSavedGameButton, menuDiv, playerNameInput } from "./references.js";
+import { render } from "./renderer.js";
+import { State } from "./state.js";
 
-const state = new State();
+let state = null;
 
-export function loadLevel(event) {
+export function loadPredefLevel(event) {
+    state = new State();
     const name = playerNameInput.value;
     const level = event.target.level;
     state.loadLevel(name, level);
     switchPanel();
-    render(state.getBoard());
+}
+
+export function loadSavedGame() {
+    const parsedState = JSON.parse(localStorage.getItem("savedGame"));
+    state = State.loadState(parsedState);
+    switchPanel();
+}
+
+export function saveGameOnWindowClose() {
+    if (state !== null) {
+        const stringifiedState = JSON.stringify(state);
+        localStorage.setItem("savedGame", stringifiedState);
+    }
+    return null;
+}
+
+export function continueButtonActivator() {
+    if (localStorage.getItem("savedGame") === null) {
+        loadSavedGameButton.disabled = true;
+    } else {
+        loadSavedGameButton.disabled = false;
+    }
 }
 
 function switchPanel() {
@@ -34,6 +56,6 @@ export async function onCellClick(event) {
         const x = cell.cellIndex;
         const y = cell.parentNode.rowIndex;
 
-        console.log(await state.update(x, y));
+        await state.update(x, y);
     }
 }
