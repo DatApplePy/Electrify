@@ -1,5 +1,5 @@
-import {Cell} from "../js/cell.js";
-import {obstacle, dark} from "../js/references.js";
+import {Cell} from "../cell.js";
+import {obstacle, dark} from "../references.js";
 
 export const cellMap = {
     "bl": [obstacle, ""],

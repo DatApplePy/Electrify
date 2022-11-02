@@ -8,11 +8,11 @@
 <body>
 <div id="menu">
     <h1>Felvillanyozódás</h1>
-    <div id="main">
-        <div id="buttons">
-            <div id="name">
-                <label for="player-name">Írd be a neved:</label>
-                <input type="text" name="" id="player-name">
+    <div id="main" class="display-flex margin-16-8">
+        <div id="buttons" class="flex-2">
+            <div id="name" class="margin-8">
+                <label for="player-name-input" class="margin-8">Add meg a neved:</label>
+                <input type="text" name="" id="player-name-input" class="margin-8">
             </div>
             <div class="flex-col-center-sm">
                 <button id="easy">Könnyű</button>
@@ -24,23 +24,18 @@
                 <button id="details-button">Részletek</button>
             </div>
         </div>
-        <div id="ranking">
-            <ul>
-                <li>Félix, Könnyű, 5 perc</li>
-                <li>Balázs, Közepes, 18 perc</li>
-                <li>Zoltán, Nehéz, 37 perc</li>
-            </ul>
+        <div id="recent-games" class="flex-1">
         </div>
     </div>
-    <div id="details">
-        <p>Nekeresdországban Nevenincs királynak egyik szeme sír, a másik nevet. Nevet, mert végre elkészült a hatalmas
+    <div id="details" class="margin-16">
+        <p class="margin-16">Nekeresdországban Nevenincs királynak egyik szeme sír, a másik nevet. Nevet, mert végre elkészült a hatalmas
             kacsalábon forgó palotája, sok-sok tágas szobával és folyosóval. Ugyanakkor sír is, mert ezeket a
             helyiségeket be kell világítani és melegen kell tartani, azonban az aktuális rezsiemelkedés őt is érinti.
             Itt az ideje tehát elgondolkodni, hogy pontosan hová is helyezzünk el villanykörtéket, hogy minden
             megfelelően be legyen világítva; ugyanakkor csak oda helyezzünk el izzót, ahol ténylegesen szükség is van
             rá.</p>
-        <h2>A játék leírása</h2>
-        <ul>
+        <h2 class="margin-16">A játék leírása</h2>
+        <ul class="margin-16">
             <li>A királynak négyzet alapú szobái vannak, amelyek fekete és fehér cellákból állnak.</li>
             <li>A fehér cellákba villanykörtéket lehet elhelyezni.</li>
             <li>A villanykörtékből a fény átlósan nem terjed, csak az adott sor és oszlop mentén.</li>
@@ -55,8 +50,15 @@
     </div>
 </div>
 <div id="game">
-    <div>
+    <div class="white-base">
         <table id="play-field"></table>
+    </div>
+    <div id="player-stats" class="white-base">
+        <p id="player-name">Név</p>
+        <p id="timer">00:00:00:00</p>
+    </div>
+    <div>
+        <button id="play-again">&#8635;</button>
     </div>
 </div>
 <script src="../js/index.js" type="module"></script>

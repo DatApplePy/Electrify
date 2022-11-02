@@ -1,46 +1,53 @@
-import { cellMap } from "../resource/cellMap.js";
 import { obstacle, bulb, crossingBulbs, dark, bright, obstacleWithCorrectAmountBulb } from "./references.js";
-import { render } from "./renderer.js";
+import {render, renderName} from "./renderer.js";
+import {Timer} from "./util/Timer.js";
 
 export class State {
     #name;
+    #levelName;
     #board;
     #coordsOfObstacles;
+    #timer;
     #updating;
-    #finished;
 
-    constructor(name = "", board = null, coordsOfObstacles = null) {
+    constructor(name, level, timerObj) {
         this.#name = name;
-        this.#board = board;
-        this.#coordsOfObstacles = coordsOfObstacles;
+        this.#levelName = level[0];
+        this.#board = level[1];
+        this.#coordsOfObstacles = level[2];
+        this.#timer = timerObj;
         this.#updating = false;
-        this.#finished = false;
     }
 
     toJSON() {
         return {
             name : this.#name,
-            board : this.#board,
-            coordsOfObstacles : this.#coordsOfObstacles
+            levelName : this.#levelName,
+            level : [this.#board, this.#coordsOfObstacles],
+            timerObj : JSON.stringify(this.#timer)
         };
     }
 
     static loadState(stateObject) {
-        render(stateObject.board);
-        return new State(stateObject.name, stateObject.board, stateObject.coordsOfObstacles);
+        const newState = new State(stateObject.name, stateObject.level, stateObject.timerObj);
+        newState.#checkBulbAmountOfObstacles();
+        render(newState.#board);
+        renderName(newState.#name);
+        return newState;
     }
 
-    loadLevel(name, level) {
-        this.#name = name;
-        this.#board = [];
-        this.#coordsOfObstacles = [];
-        for (let y = 0; y < level.length; y++) {
-            this.#board[y] = [];
-            for (let x = 0; x < level[y].length; x++) {
-                this.#board[y][x] = cellMap.extract(level[y][x]);
-                if (this.#isObstacle(x, y)) this.#coordsOfObstacles.push([x, y]);
-            }
-        }
+    reset() {
+        this.#board.forEach(row => {
+            row.forEach(cell => {
+                if (cell.style === bright) {
+                    cell.style = dark;
+                    cell.value = "";
+                    cell.lightSourceCount = 0;
+                    cell.overlappingBulbs = 0;
+                }
+            })
+        });
+        this.#timer = new Timer();
         this.#checkBulbAmountOfObstacles();
         render(this.#board);
     }
@@ -51,7 +58,6 @@ export class State {
             this.#putBulb(x, y);
             this.#checkBulbAmountOfObstacles();
             await this.#spreadLight(x, y);
-            this.#finished = this.#isGameOver();
             this.#updating = false;
         }
     }
@@ -137,15 +143,16 @@ export class State {
         render(this.#board);
     }
 
-    #isGameOver() {
-        this.#board.forEach(row => {
-            row.forEach(cell => {
+    isGameOver() {
+        for (let y = 0; y < this.#board.length; y++) {
+            for (let x = 0; x < this.#board[y].length; x++) {
+                const cell = this.#board[y][x];
                 if ((cell.style === obstacle && cell.value !== "") ||
                     (cell.style === dark || cell.style === crossingBulbs)) {
                     return false;
                 }
-            })
-        });
+            }
+        }
         return true;
     }
 
@@ -169,5 +176,17 @@ export class State {
 
     async #sleep(time) {
         return new Promise(resolve => setTimeout(resolve, time));
+    }
+
+    startTimer() {
+        this.#timer.startT();
+    }
+
+    stopTimer() {
+        this.#timer.stopT();
+    }
+
+    getStats() {
+        return [this.#name, this.#levelName, this.#timer.getTime()];
     }
 }
