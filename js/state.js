@@ -22,8 +22,7 @@ export class State {
     toJSON() {
         return {
             name : this.#name,
-            levelName : this.#levelName,
-            level : [this.#board, this.#coordsOfObstacles],
+            level : [this.#levelName, this.#board, this.#coordsOfObstacles],
             timerObj : JSON.stringify(this.#timer)
         };
     }
