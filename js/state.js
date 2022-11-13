@@ -22,8 +22,7 @@ export class State {
     toJSON() {
         return {
             name : this.#name,
-            levelName : this.#levelName,
-            level : [this.#board, this.#coordsOfObstacles],
+            level : [this.#levelName, this.#board, this.#coordsOfObstacles],
             timerObj : JSON.stringify(this.#timer)
         };
     }
@@ -40,10 +39,7 @@ export class State {
         this.#board.forEach(row => {
             row.forEach(cell => {
                 if (cell.style === bright) {
-                    cell.style = dark;
-                    cell.value = "";
-                    cell.lightSourceCount = 0;
-                    cell.overlappingBulbs = 0;
+                    cell.reset();
                 }
             })
         });
