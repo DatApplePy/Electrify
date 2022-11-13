@@ -1,33 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="vh-100">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="../css/index.css">
     <title>Felvillanyozódás</title>
+    <link rel="shortcut icon" href="../resource/favicon.ico" type="image/x-icon">
 </head>
-<body>
+<body class="margin-0">
 <div id="menu">
-    <h1>Felvillanyozódás</h1>
-    <div id="main" class="display-flex margin-16-8">
-        <div id="buttons" class="flex-2">
-            <div id="name" class="margin-8">
+    <h1 class="text-align-center font-size-48 color-wihte">Felvillanyozódás</h1>
+    <div class="display-flex margin-16-8">
+        <div class="flex-2 flex-1-sm">
+            <div class="margin-8 display-flex-sm justify-content-center-sm">
                 <label for="player-name-input" class="margin-8">Add meg a neved:</label>
                 <input type="text" name="" id="player-name-input" class="margin-8">
             </div>
             <div class="flex-col-center-sm">
-                <button id="easy">Könnyű</button>
-                <button id="normal">Közepes</button>
-                <button id="hard">Nehéz</button>
+                <button id="easy" class="btn btn-menu">Könnyű</button>
+                <button id="normal" class="btn btn-menu">Közepes</button>
+                <button id="hard" class="btn btn-menu">Nehéz</button>
             </div>
             <div class="flex-col-center-sm">
-                <button id="saved-game">Folytatás</button>
-                <button id="details-button">Részletek</button>
+                <button id="saved-game" class="btn btn-menu">Folytatás</button>
+                <button id="details-button" class="btn btn-menu">Részletek</button>
             </div>
         </div>
-        <div id="recent-games" class="flex-1">
+        <div id="recent-games" class="flex-1 font-size-24">
         </div>
     </div>
-    <div id="details" class="margin-16">
+    <div id="details" class="max-height-0 margin-16 background-color-white border-radius-16 overflow-hidden">
         <p class="margin-16">Nekeresdországban Nevenincs királynak egyik szeme sír, a másik nevet. Nevet, mert végre elkészült a hatalmas
             kacsalábon forgó palotája, sok-sok tágas szobával és folyosóval. Ugyanakkor sír is, mert ezeket a
             helyiségeket be kell világítani és melegen kell tartani, azonban az aktuális rezsiemelkedés őt is érinti.
@@ -49,16 +50,16 @@
         </ul>
     </div>
 </div>
-<div id="game">
+<div id="game" class="vh-100 display-none flex-direction-col justify-content-center">
     <div class="white-base">
         <table id="play-field"></table>
     </div>
-    <div id="player-stats" class="white-base">
-        <p id="player-name">Név</p>
-        <p id="timer">00:00:00:00</p>
+    <div class="display-flex margin-top-16 white-base">
+        <p id="player-name" class="margin-8 font-size-32 text-align-center">Név</p>
+        <p id="timer" class="margin-8 font-size-32">00:00:00:00</p>
     </div>
     <div>
-        <button id="play-again">&#8635;</button>
+        <button id="play-again" class="display-none btn font-size-32">&#8635;</button>
     </div>
 </div>
 <script src="../js/index.js" type="module"></script>

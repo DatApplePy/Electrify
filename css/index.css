@@ -16,13 +16,11 @@
 }
 
 html {
-    height: 100vh;
     user-select: none;
 }
 
 body {
     font-family: Calibri, serif;
-    margin: 0;
     background-image: var(--gradient);
     background-size: 400%;
     animation: bg-animation 5s infinite alternate;
@@ -37,10 +35,12 @@ body {
     }
 }
 
-h1 {
-    text-align: center;
-    font-size: 48px;
-    color: white;
+.vh-100 {
+    height: 100vh;
+}
+
+.max-height-0 {
+    max-height: 0;
 }
 
 .margin-0 {
@@ -55,16 +55,24 @@ h1 {
     margin: 16px;
 }
 
+.margin-top-16 {
+    margin-top: 16px;
+}
+
 .margin-16-8 {
     margin: 16px 8px;
 }
 
-.margin-auto {
-    margin: auto;
+.display-none {
+    display: none;
 }
 
 .display-flex {
     display: flex;
+}
+
+.flex-direction-col {
+    flex-direction: column;
 }
 
 .flex-1 {
@@ -75,19 +83,46 @@ h1 {
     flex: 2;
 }
 
-#buttons button {
-    width: var(--button-width);
-    height: calc(var(--button-width)/4);
-    margin: 8px;
+.justify-content-center {
+    justify-content: center;
+}
+
+.align-items-center {
+    align-items: center;
+}
+
+.text-align-center {
+    text-align: center;
+}
+
+.font-size-24 {
+    font-size: 24px;
+}
+
+.font-size-32 {
+    font-size: 32px;
+}
+
+.font-size-48 {
+    font-size: 48px;
+}
+
+.btn {
     border: none;
     border-radius: 16px;
     text-transform: uppercase;
     font-weight: bold;
+}
+
+.btn.btn-menu {
+    margin: 8px;
     font-size: 24px;
+    width: var(--button-width);
+    height: calc(var(--button-width)/4);
     transition: height 0.3s, width 0.3s;
 }
 
-#buttons button:hover {
+.btn.btn-menu:hover {
     width: var(--button-hover-width);
     height: calc(var(--button-hover-width)/4);
     color: white;
@@ -95,23 +130,28 @@ h1 {
     border: 2px solid white;
 }
 
-#details {
-    max-height: 0;
-    background-color: white;
+.border-radius-8 {
+    border-radius: 8px;
+}
+
+.border-radius-16 {
     border-radius: 16px;
+}
+
+.color-wihte {
+    color: white;
+}
+
+.background-color-white {
+    background-color: white;
+}
+
+.background-color-transparent {
+    background-color: transparent;
+}
+
+.overflow-hidden {
     overflow: hidden;
-    transition: max-height 0.3s ease-in-out;
-}
-
-#recent-games {
-    font-size: 24px;
-}
-
-#game {
-    display: none;
-    height: 100vh;
-    flex-direction: column;
-    justify-content: center;
 }
 
 .white-base {
@@ -119,6 +159,10 @@ h1 {
     border: white solid 8px;
     border-radius: 8px;
     align-self: center;
+}
+
+#details {
+    transition: max-height 0.3s ease-in-out;
 }
 
 #play-field {
@@ -136,22 +180,6 @@ h1 {
     font-size: 32px;
 }
 
-#player-stats {
-    display: flex;
-    margin-top: 16px;
-}
-
-#player-name {
-    font-size: 32px;
-    text-align: center;
-    margin: 8px;
-}
-
-#timer {
-    font-size: 32px;
-    margin: 8px;
-}
-
 #play-field img {
     width: var(--svg-size);
     height: var(--svg-size);
@@ -160,27 +188,19 @@ h1 {
 }
 
 #play-again {
-    display: none;
     width: 50px;
     height: 50px;
-    border: none;
-    border-radius: 16px;
-    text-transform: uppercase;
-    font-weight: bold;
-    font-size: 32px;
     position: absolute;
     right: 20px;
     bottom: 20px;
 }
 
 @media screen and (max-width: 1080px) {
-    #buttons button {
-        display: block;
-    }
-    #buttons {
+    .display-flex-sm {
         display: flex;
-        flex-direction: column;
-        align-items: center;
+    }
+
+    .flex-1-sm {
         flex: 1;
     }
 
@@ -190,8 +210,7 @@ h1 {
         align-items: center;
     }
 
-    #name {
-        display: flex;
+    .justify-content-center-sm {
         justify-content: center;
     }
 }
